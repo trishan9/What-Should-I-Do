@@ -54,21 +54,21 @@
   justify-content: center;
 }
 
-.activity {
+.activityDiv {
   background-color: #00adb5;
   color: white;
   padding: 20px 25px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
 
 .load {
   color: #00adb5;
 }
 
-.textarea {
-  background-color: #00adb5;
-  color: white;
-  padding: 20px 25px;
-  border-radius: 10px;
-  resize: none;
+.delete-icon:hover {
+  cursor: pointer;
 }

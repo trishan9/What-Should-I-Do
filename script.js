@@ -1,5 +1,5 @@
 let fetchBtn = document.querySelector(".activityBtn")
-let deleteBtn
+let deleteBtn, editBtn, editActivity, activityValue
 let activitiesDiv = document.querySelector(".renderActivity")
 const clearBtn = document.querySelector(".clearBtn")
 let loadText = document.querySelector(".load")
@@ -19,13 +19,36 @@ const fetchActivity = async () => {
     activitiesArr.forEach((data) => {
         let ihtml = `
         <div class="activityDiv">
-        <p class="activity">${data.activity}<br/>Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
-        <img src="trash.png" alt="" class="delete-icon">
+            <div className="details">
+                <p class="activity">${data.activity}</p>
+                <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
+            </div>
+            <img src="edit.png" alt="" class="edit-icon">
+            <img src="trash.png" alt="" class="delete-icon">
         </div>
         `
         loadText.innerHTML = ''
         activitiesDiv.innerHTML += ihtml
 
+
+        // <======================= Edit Button =======================>
+        editBtn = document.querySelectorAll(".edit-icon")
+        editBtn.forEach((btn, index, arr) => {
+            btn.addEventListener("mouseenter", () => {
+                btn.src = 'hover-edit.png'
+            })
+
+            btn.addEventListener("mouseleave", () => {
+                btn.src = 'edit.png'
+            })
+
+            btn.addEventListener("click", () => {
+                let element = deleteBtn[index].parentElement
+                console.log(element)
+            })
+        })
+
+        // <======================= Delete Button =======================>
         deleteBtn = document.querySelectorAll(".delete-icon")
         deleteBtn.forEach((btn, index, arr) => {
             btn.addEventListener("mouseenter", () => {
@@ -58,65 +81,3 @@ const clearLoadFunc = () => {
 
 fetchBtn.addEventListener("click", fetchActivity)
 clearBtn.addEventListener("click", clearFunc)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

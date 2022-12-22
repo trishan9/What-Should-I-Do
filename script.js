@@ -1,5 +1,5 @@
 let fetchBtn = document.querySelector(".activityBtn")
-let deleteBtn, editBtn, editActivity, activityValue
+let deleteBtn, editBtn
 let activitiesDiv = document.querySelector(".renderActivity")
 const clearBtn = document.querySelector(".clearBtn")
 let loadText = document.querySelector(".load")
@@ -19,55 +19,99 @@ const fetchActivity = async () => {
     activitiesArr.forEach((data) => {
         let ihtml = `
         <div class="activityDiv">
-            <div className="details">
+            <div class="details">
                 <p class="activity">${data.activity}</p>
                 <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
             </div>
-            <img src="edit.png" alt="" class="edit-icon">
-            <img src="trash.png" alt="" class="delete-icon">
+            <img src="images/edit.png" alt="" class="edit-icon">
+            <img src="images/trash.png" alt="" class="delete-icon">
         </div>
         `
         loadText.innerHTML = ''
         activitiesDiv.innerHTML += ihtml
 
 
-        // <======================= Edit Button =======================>
+        // <======================= Edit Function =======================>
+        const editFunc = () => {
+
+            let UpdateEditBtn = document.querySelectorAll(".edit-icon")
+            UpdateEditBtn.forEach((btn, index, arr) => {
+                btn.addEventListener("mouseenter", () => {
+                    btn.src = 'images/hover-edit.png'
+                })
+
+                btn.addEventListener("mouseleave", () => {
+                    btn.src = 'images/edit.png'
+                })
+
+                btn.addEventListener("click", () => {
+                    let element = UpdateEditBtn[index].parentElement
+                    console.log(element)
+                    let ihtml =
+                        `
+                    <textarea class = "textarea">${element.querySelector('.activity').innerHTML}</textarea>
+                    `
+                    element.innerHTML = ihtml
+
+                    let textarea = document.querySelector('.textarea')
+                    textarea.addEventListener("change", () => {
+                        element.innerHTML =
+                            `
+                            <div class="details">
+                                <p class="activity">${textarea.value}</p>
+                                <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
+                            </div>
+                            <img src="images/edit.png" alt="" class="edit-icon">
+                            <img src="images/trash.png" alt="" class="delete-icon">
+                            `
+                        updateDataFunc()
+                    })
+                })
+            })
+        }
+
+
+        // <======================= Delete Function =======================>
+        const deleteFunc = () => {
+            let UpdateDeleteBtn = document.querySelectorAll(".delete-icon")
+            UpdateDeleteBtn.forEach((btn, index, arr) => {
+                btn.addEventListener("mouseenter", () => {
+                    btn.src = 'images/hover-trash.png'
+                })
+
+                btn.addEventListener("mouseleave", () => {
+                    btn.src = 'images/trash.png'
+                })
+
+                btn.addEventListener("click", () => {
+                    let element = UpdateDeleteBtn[index].parentElement
+                    element.remove()
+                    loadText.innerHTML = 'Activity deleted succesfully!!!'
+                    setTimeout(clearLoadFunc, 500)
+                })
+            })
+        }
+
+
+        // <======================= Update Function =======================>
+        const updateDataFunc = () => {
+            editFunc()
+            deleteFunc()
+        }
+
         editBtn = document.querySelectorAll(".edit-icon")
-        editBtn.forEach((btn, index, arr) => {
-            btn.addEventListener("mouseenter", () => {
-                btn.src = 'hover-edit.png'
-            })
-
-            btn.addEventListener("mouseleave", () => {
-                btn.src = 'edit.png'
-            })
-
-            btn.addEventListener("click", () => {
-                let element = deleteBtn[index].parentElement
-                console.log(element)
-            })
+        editBtn.forEach(() => {
+            updateDataFunc()
         })
 
-        // <======================= Delete Button =======================>
         deleteBtn = document.querySelectorAll(".delete-icon")
-        deleteBtn.forEach((btn, index, arr) => {
-            btn.addEventListener("mouseenter", () => {
-                btn.src = 'hover-trash.png'
-            })
-
-            btn.addEventListener("mouseleave", () => {
-                btn.src = 'trash.png'
-            })
-
-            btn.addEventListener("click", () => {
-                let element = deleteBtn[index].parentElement
-                element.remove()
-                loadText.innerHTML = 'Activity deleted succesfully!!!'
-                setTimeout(clearLoadFunc, 500)
-            })
+        deleteBtn.forEach(() => {
+            updateDataFunc()
         })
     })
+
 }
+
 
 const clearFunc = () => {
     activitiesDiv.innerHTML = ''

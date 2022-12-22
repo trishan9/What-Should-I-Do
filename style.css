@@ -78,10 +78,11 @@
   cursor: pointer;
 }
 
-.editField {
+.textarea {
   resize: none;
   overflow: hidden;
   background-color: #00adb5;
+  border: none;
   color: white;
   padding: 20px 25px;
   width: 20rem;
@@ -90,6 +91,13 @@
   justify-content: center;
   align-items: center;
   gap: 30px;
+}
+
+.textarea:focus {
+  all: unset;
+  font-size: 0.8rem;
+  padding: 10px 25px;
+  width: 20rem;
 }
 
 .hidden {

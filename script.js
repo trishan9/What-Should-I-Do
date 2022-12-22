@@ -1,10 +1,10 @@
 let fetchBtn = document.querySelector(".activityBtn")
-let deleteBtn, editBtn
 let activitiesDiv = document.querySelector(".renderActivity")
 const clearBtn = document.querySelector(".clearBtn")
 let loadText = document.querySelector(".load")
 let activitiesArr = []
 let url = 'https://www.boredapi.com/api/activity'
+let deleteBtn, editBtn
 
 
 const fetchActivity = async () => {
@@ -15,27 +15,23 @@ const fetchActivity = async () => {
     let { activity, type } = result
 
     activitiesArr.push({ 'activity': activity, 'typeOfActivity': type })
-
     activitiesArr.forEach((data) => {
-        let ihtml = `
-        <div class="activityDiv">
-            <div class="details">
-                <p class="activity">${data.activity}</p>
-                <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
-            </div>
-            <img src="images/edit.png" alt="" class="edit-icon">
-            <img src="images/trash.png" alt="" class="delete-icon">
-        </div>
-        `
+        let ihtml = `<div class="activityDiv">
+                        <div class="details">
+                            <p class="activity">${data.activity}</p>
+                            <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
+                        </div>
+                        <img src="images/edit.png" alt="" class="edit-icon">
+                        <img src="images/trash.png" alt="" class="delete-icon">
+                    </div>`
         loadText.innerHTML = ''
         activitiesDiv.innerHTML += ihtml
 
 
         // <======================= Edit Function =======================>
         const editFunc = () => {
-
             let UpdateEditBtn = document.querySelectorAll(".edit-icon")
-            UpdateEditBtn.forEach((btn, index, arr) => {
+            UpdateEditBtn.forEach((btn, index) => {
                 btn.addEventListener("mouseenter", () => {
                     btn.src = 'images/hover-edit.png'
                 })
@@ -47,23 +43,18 @@ const fetchActivity = async () => {
                 btn.addEventListener("click", () => {
                     let element = UpdateEditBtn[index].parentElement
                     console.log(element)
-                    let ihtml =
-                        `
-                    <textarea class = "textarea">${element.querySelector('.activity').innerHTML}</textarea>
-                    `
+                    let ihtml = `<textarea class = "textarea">${element.querySelector('.activity').innerHTML}</textarea>`
                     element.innerHTML = ihtml
 
                     let textarea = document.querySelector('.textarea')
                     textarea.addEventListener("change", () => {
-                        element.innerHTML =
-                            `
+                        element.innerHTML = `
                             <div class="details">
                                 <p class="activity">${textarea.value}</p>
                                 <p class="type">Type: ${data.typeOfActivity.charAt(0).toUpperCase() + data.typeOfActivity.slice(1)}</p>
                             </div>
                             <img src="images/edit.png" alt="" class="edit-icon">
-                            <img src="images/trash.png" alt="" class="delete-icon">
-                            `
+                            <img src="images/trash.png" alt="" class="delete-icon">`
                         updateDataFunc()
                     })
                 })
@@ -92,7 +83,6 @@ const fetchActivity = async () => {
             })
         }
 
-
         // <======================= Update Function =======================>
         const updateDataFunc = () => {
             editFunc()
@@ -111,7 +101,6 @@ const fetchActivity = async () => {
     })
 
 }
-
 
 const clearFunc = () => {
     activitiesDiv.innerHTML = ''
